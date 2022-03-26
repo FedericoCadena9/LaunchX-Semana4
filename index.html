@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex | LaunchX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        .font-body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #e5dbdb;
+background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff3e3e' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+
+<body class="font-body" >
+    <div class="sm:flex sm:items-center sm:justify-center sm:h-screen mx-2 sm:mx-0">
+        <!-- Pantalla Izquierda -->
+        <div class="sm:grid sm:grid-cols-2">
+            <div class="bg-red-500 sm:rounded-lg border-4 border-black py-4">
+                <!-- Botones -->
+                <div class="px-6 flex items-center space-x-10">
+                    <div class="bg-blue-600 rounded-full w-14 h-14 border-4 border-white ring-[3px] ring-black p-2">
+                        <div class="rounded-full h-4 w-4 bg-white opacity-40"></div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <div class="bg-red-600 rounded-full w-6 h-6  ring-[3px] ring-black p-1">
+                            <div class="rounded-full h-2 w-2 bg-white opacity-40"></div>
+                        </div>
+                        <div class="bg-amber-500 rounded-full w-6 h-6  ring-[3px] ring-black p-1">
+                            <div class="rounded-full h-2 w-2 bg-white opacity-40"></div>
+                        </div>
+                        <div class="bg-green-600 rounded-full w-6 h-6  ring-[3px] ring-black p-1">
+                            <div class="rounded-full h-2 w-2 bg-white opacity-40"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pantalla de Imagen -->
+                <div class="">
+                    <div class="py-7 px-6">
+                        <div class="bg-slate-100 border-[3px] border-black py-2 px-5 rounded-bl-3xl">
+                            <div class="flex space-x-4 items-center w-full justify-center py-2">
+                                <div class="bg-red-500 rounded-full w-2 h-2  ring-2 ring-black"></div>
+                                <div class="bg-red-500 rounded-full w-2 h-2  ring-2 ring-black"></div>
+                            </div>
+                            <div
+                                class="px-6 rounded-lg bg-green-500 border-2 border-black w-full h-40">
+                                <p class="text-gray-700 text-center py-2 text-xs" id="pokeId"></p>
+                                <div class="flex w-full items-center justify-center">
+                                    <img id="pokeImg" src="" class="object-cover" alt="">
+                                </div>
+                                <p class="text-gray-700 text-center py-2 text-xs" id="pokeName"></p>
+                            </div>
+                            <div class="flex justify-between items-center py-2 mx-4">
+                                <div class="bg-red-600 rounded-full w-4 h-4 ring-[3px] ring-black p-0.5">
+                                    <div class="rounded-full h-1.5 w-1.5 bg-white opacity-40"></div>
+                                </div>
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-rows-5 grid-cols-3 px-3">
+                    <div class="col-span-2 row-span-2 flex items-start space-x-6">
+                        <div class="bg-slate-800 rounded-full w-8 h-8  ring-[3px] ring-black"></div>
+                        <div class="flex space-x-4 items-center">
+                            <div class="w-14 bg-red-600 h-2 rounded-full border-2 border-black"></div>
+                            <div class="w-14 bg-blue-600 h-2 rounded-full border-2 border-black"></div>
+                        </div>
+                    </div>
+                    <div class="col-span-2 row-span-2 flex items-center space-x-4 px-1">
+                        <div class="flex space-x-2 items-center">
+                            <input
+                                class="px-2 bg-green-500 border-2 border-black w-32 rounded-md h-8 text-[10px] placeholder:text-gray-700 text-black"
+                                placeholder="Buscar Pokemón" type="text" id="pokeSearch" name="pokeSearch">
+
+                            <button onclick="fetchPokemon()" class="bg-red-600 rounded-full w-7 h-7 ring-[3px] ring-black flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-start-3 row-span-4 row-start-1 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class=" text-slate-800 h-20 w-20 stroke-[5px]"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </div>
+
+                    <div class="row-span-1 col-span-3 w-full flex justify-end pr-5">
+                        <div class="flex items-center space-x-2 pb-2 pt-1">
+
+                            <div class="bg-red-600 rounded-full w-3 h-3 ring-[3px] ring-black p-0.5">
+                                <div class="rounded-full h-1.5 w-1.5 bg-white opacity-40"></div>
+                            </div>
+                            <div class="bg-black rounded-full w-1 h-1"></div>
+                            <div class="bg-black rounded-full w-1 h-1"></div>
+                            <div class="bg-black rounded-full w-1 h-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parte derecha -->
+            <div class="bg-red-500 sm:rounded-lg border-4 border-black py-4">
+                <div class="pt-7 px-6">
+
+                    <!-- Movimientos -->
+                    <div class="h-36 w-full bg-slate-400 border-4 rounded-lg border-black overflow-y-auto">
+                        <p class="text-gray-800 p-2 text-xs">Movimientos:</p>
+                        <ul id="pokeUl" class="text-gray-800 p-2 text-[9px]"></ul>
+
+                    </div>
+                    <div class="flex justify-center">
+                        <!-- Estadísticas  -->
+                        <div class="grid grid-cols-6 grid-rows-2 mt-4 mb-2 w-auto  text-gray-100 p-2 text-[9px] text-center">
+                            <div class="col-start-1 row-start-1 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                                <p>HP</p>
+                            </div>
+                            <div class="col-start-2 row-start-1 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                                <p>ATK</p>
+                            </div>
+                            <div class="col-start-3 row-start-1 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                                <p>DEF</p>
+                            </div>
+                            <div class="col-start-4 row-start-1 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                                <p>SP-ATK</p>
+                            </div>
+                            <div class="col-start-5 row-start-1 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                                <p>SP-DEF</p>
+                            </div>
+                            <div class="col-start-6 row-start-1 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                                <p>SPD</p>
+                            </div>
+                            <div id="pokeHp" class="col-start-1 row-start-2 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                            </div>
+                            <div id="pokeAtk" class=" col-start-2 row-start-2 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                            </div>
+                            <div id="pokeDef" class=" col-start-3 row-start-2 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                            </div>
+                            <div id="pokeSpAtk" class=" col-start-4 row-start-2 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                            </div>
+                            <div id="pokeSpDef" class=" col-start-5 row-start-2 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                            </div>
+                            <div id="pokeSpd" class=" col-start-6 row-start-2 rounded bg-blue-500 w-10 h-10 border-2 border-black flex items-center justify-center">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3 w-full justify-end">
+                        <div class="w-14 bg-slate-700 h-2  border-2 border-black"></div>
+                        <div class="w-14 bg-slate-700 h-2  border-2 border-black"></div>
+                    </div>
+
+                    <div class="my-6">
+                        <div class="flex space-x-3">
+                            <div class="bg-red-600 rounded-full w-3 h-3 ring-[3px] ring-black p-0.5">
+                                <div class="rounded-full h-1.5 w-1.5 bg-white opacity-40"></div>
+                            </div>
+                            <div class="bg-red-600 rounded-full w-3 h-3 ring-[3px] ring-black p-0.5">
+                                <div class="rounded-full h-1.5 w-1.5 bg-white opacity-40"></div>
+                            </div>
+                        </div>
+                        <div class="w-full flex items-start justify-between my-3">
+                            <!-- Tipo de Pokemon -->
+                            <div class="flex">
+                                <div class="rounded bg-slate-100 h-10 border-2 border-black flex items-center justify-center px-2">
+                                    <p class="text-xs text-amber-500" id="txtType"></p>
+                                </div>
+                                <div class="rounded bg-slate-100 h-10 border-2 border-black flex items-center justify-center px-2">
+                                    <p class="text-[10px] text-amber-500" id="pokeType"></p>
+                                </div>
+                            </div>
+                            <div class="bg-amber-500 rounded-full w-8 h-8  ring-[3px] ring-black p-1.5">
+                                <div class="rounded-full h-2 w-2 bg-white opacity-40"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Peso y Altura -->
+                <div class="sm:px-4 px-2">
+                    <div class="flex justify-between space-x-3">
+                        <!-- Peso -->
+                        <div class="bg-slate-400 border-2 border-black w-1/2 rounded-md h-10 flex items-center">
+                            <p id="pokePeso" class="text-gray-800 p-2 text-xs"></p>
+                        </div>
+
+                        <!-- Altura -->
+                        <div class="bg-slate-400 border-2 border-black w-1/2 rounded-md h-10 flex items-center">
+                            <p id="pokeAltura" class="text-gray-800 p-2 text-xs"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Foooter -->
+    <footer class="px-24 py-6 bg-slate-100 max-w-7xl font-sans">
+        <p class="text-sm text-slate-500 text-center">Entregable desarrollado con base a los contenidos de la Semana 4 🚀| Frontend Mission del programa Launch X - Innovacción Virtual Microsoft.</p>
+    </footer>
+
+    <script src="./script.js"></script>    
+</body>
+
+</html>
